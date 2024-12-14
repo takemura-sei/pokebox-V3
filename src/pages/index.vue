@@ -1,20 +1,8 @@
+<!-- src/pages/index.vue -->
 <script setup lang="ts">
-  const { $pokeApi } = useNuxtApp();
+import { useFetchPokemonList} from '@/composables/usePokemon';
 
-  const fetchData = async () => {
-    await $pokeApi.get('pokemon')
-    .then(response => {
-      console.log(response.data)
-    })
-  }
-
-  const pokemonData = async () => {
-    const res = await $pokeApi.get('ability');
-    console.log(res.data);
-  }
-
-  fetchData();
-  pokemonData();
+useFetchPokemonList();
 </script>
 
 <template>
