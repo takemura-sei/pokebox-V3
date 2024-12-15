@@ -1,17 +1,17 @@
 // src/services/pokeApi.ts
+export {
+  fetchPokemonList,
+  fetchPokemonAbility,
+};
+
 const fetchPokemonList = async () => {
   const { $pokeApi } = useNuxtApp();
   const response = await $pokeApi.get('pokemon');
-  console.log(response.data);
+  return response.data;
 };
 
 const fetchPokemonAbility = async () => {
   const { $pokeApi } = useNuxtApp();
   const response = await $pokeApi.get('ability');
-  console.log(response.data);
-};
-
-export {
-  fetchPokemonList,
-  fetchPokemonAbility,
+  return response.data;
 };
