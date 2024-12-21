@@ -1,12 +1,19 @@
 <!-- src/pages/index.vue -->
 <script setup lang="ts">
-import { useFetchPokemonList} from '@/composables/usePokemon';
+import { usePokemonListStore } from '@/stores/pokemonListStore';
 
-useFetchPokemonList();
+const pokemonListStore = usePokemonListStore();
+
+onMounted(async () => {
+  await pokemonListStore.fetchpokemonList("1");
+})
+
 </script>
 
 <template>
   <h1 class="bg-blue-500">
     Hello World!
   </h1>
+  <p>Count:{{ pokemonListStore.pokemonCount }}</p>
+  <p>Name:{{ pokemonListStore.pokemonList }}</p>
 </template>
