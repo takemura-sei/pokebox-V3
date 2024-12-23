@@ -1,17 +1,24 @@
 // src/services/pokeApi.ts
 export {
-  pokemonList,
-  abilityList
+  pokemonApiPlugin,
+  pokemonDataPlugin,
+  abilityListPlugin
 };
 
-const pokemonList = async (endpoint: string) => {
-  const { $pokemonData } = useNuxtApp();
-  const response = await $pokemonData.get(endpoint);
+const pokemonApiPlugin = async(endpoint: string = '') => {
+  const { $pokeApiPlugin } = useNuxtApp();
+  const response = await $pokeApiPlugin.get(endpoint);
+  return response;
+}
+
+const pokemonDataPlugin = async(endpoint: string = '') => {
+  const { $pokemonDataPlugin } = useNuxtApp();
+  const response = await $pokemonDataPlugin.get(endpoint);
   return response;
 };
 
-const abilityList = async (endpoint: string) => {
-  const { $abilityData } = useNuxtApp();
-  const response = await $abilityData.get(endpoint);
-  return response.data;
+const abilityListPlugin = async(endpoint: string) => {
+  const { $abilityDataPlugin } = useNuxtApp();
+  const response = await $abilityDataPlugin.get(endpoint);
+  return response;
 };
