@@ -1,9 +1,11 @@
 <script setup>
 import { usePokemonDataStore } from '@/stores/pokemonDataStore';
+import { getLastElementUrl } from '@/utils/urlUtils';
 
 const pokemonDataStore = usePokemonDataStore();
+const pokemonImageUrl = ref('');
 
-defineProps ({
+const props = defineProps ({
   name: {
     type: String,
     required: true
@@ -14,11 +16,16 @@ defineProps ({
   }
 });
 
+
+onMounted(async () => {
+  const lastElementUrl = getLastElementUrl(props.url);
+  pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
+})
+
 </script>
 
 <template>
   <div>
-    <p>{{ name }}</p>
-    <p>{{ url }}</p>
+    <p>aa</p>
   </div>
 </template>

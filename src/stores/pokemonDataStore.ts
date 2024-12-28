@@ -1,20 +1,26 @@
 // src/stores/pokemonList.ts
-import { pokemonApiPlugin, pokemonDataPlugin } from "@/services/pokeApi";
-
+import { fetchPokemonData, fetchSingleData } from "@/services/pokeApi";
 import { defineStore } from "pinia";
+
+type DisplayImageData = {
+  [key: string]: string,
+};
 
 export const usePokemonDataStore = defineStore('pokemon', {
   state: () => ({
     displayPokemonList: [],
+    displayImageData: {} as DisplayImageData,
   }),
   actions: {
-    async fetchPokemonApi() {
-      const response = await pokemonDataPlugin();
-      this.displayPokemonList = response.data.results;
+    async loadPokemonApi() {
+      const response = await fetchPokemonData();
+      this.displayPokemonList = response.results;
     },
-    async fetchGetPokemonImage(url: string) {
-      const response = await pokemonDataPlugin(url);
-      console.log(response.data);
+    async loadPokemonImage(name: string, endpoint: string) {
+      const response = await fetchSingleData(endpoint);
+      const imageUrl = response.sprites.front_default;
+      console.log(imageUrl);
+      this.displayImageData[name] = imageUrl;
     }
   }
 });
