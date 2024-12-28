@@ -3,7 +3,7 @@ import { usePokemonDataStore } from '@/stores/pokemonDataStore';
 import { getLastElementUrl } from '@/utils/urlUtils';
 
 const pokemonDataStore = usePokemonDataStore();
-const pokemonImageUrl = ref('');
+const imageUrl = ref('');
 
 const props = defineProps ({
   name: {
@@ -19,13 +19,14 @@ const props = defineProps ({
 
 onMounted(async () => {
   const lastElementUrl = getLastElementUrl(props.url);
-  pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
+  await pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
+  imageUrl.value = pokemonDataStore.displayImageData[props.name];
 })
 
 </script>
 
 <template>
   <div>
-    <p>aa</p>
+    <p>{{ imageUrl }}</p>
   </div>
 </template>

@@ -19,7 +19,6 @@ export const usePokemonDataStore = defineStore('pokemon', {
     async loadPokemonImage(name: string, endpoint: string) {
       const response = await fetchSingleData(endpoint);
       const imageUrl = response.sprites.front_default;
-      console.log(imageUrl);
       this.displayImageData[name] = imageUrl;
     }
   }
