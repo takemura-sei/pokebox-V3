@@ -15,10 +15,9 @@ const props = defineProps ({
     required: true
   }
 });
-
+const lastElementUrl = getLastElementUrl(props.url);
 
 onMounted(async () => {
-  const lastElementUrl = getLastElementUrl(props.url);
   await pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
   imageUrl.value = pokemonDataStore.displayImageData[props.name];
 })
@@ -26,7 +25,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <p>{{ imageUrl }}</p>
-  </div>
+    <img :src=imageUrl alt="">
 </template>
