@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <div>
-    <PokemonJpName :name="data.name" :url="data.url"/>
+    <PokemonJpName :name="props.data.name" :url="props.data.url"/>
     <PokemonImages :name="props.data.name" :url="props.data.url"/>
   </div>
 </template>

@@ -12,13 +12,21 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="pokemonDataStore.displayPokemonList">
-    <h1 class="bg-blue-500">Hello World!</h1>
-    <ul>
+  <div v-if="pokemonDataStore.displayPokemonList" class="container">
+    <ul class="flex flex-wrap">
       <li v-for="pokemon in pokemonDataStore.displayPokemonList" :key="pokemon">
-        <PokemonCard :data="pokemon"></PokemonCard>
+        <PokemonCard :data="pokemon" />
       </li>
     </ul>
   </div>
   <p v-else>Loading Pokémon data...</p>
 </template>
+
+<style scoped>
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgb(203, 238, 238);
+}
+</style>
