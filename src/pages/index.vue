@@ -1,25 +1,13 @@
 <!-- src/pages/index.vue -->
 <script setup lang="ts">
-import { usePokemonDataStore } from '@/stores/pokemonDataStore';
-import PokemonCard from '@/components/PokemonCard.vue';
-
-const pokemonDataStore = usePokemonDataStore();
-
-onMounted(async () => {
-  await pokemonDataStore.loadPokemonApi();
-});
+import PokemonList from '@/components/PokemonList.vue';
 
 </script>
 
 <template>
-  <div v-if="pokemonDataStore.displayPokemonList" class="container">
-    <ul class="flex flex-wrap gap-3 justify-center">
-      <li v-for="pokemon in pokemonDataStore.displayPokemonList" :key="pokemon">
-        <PokemonCard :data="pokemon" />
-      </li>
-    </ul>
+  <div class="container">
+    <PokemonList />
   </div>
-  <p v-else>Loading Pokémon data...</p>
 </template>
 
 <style scoped>

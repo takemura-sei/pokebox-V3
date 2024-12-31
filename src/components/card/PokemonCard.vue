@@ -1,6 +1,6 @@
 <script setup>
-import PokemonImages from '@/components/card_details/PokemonImages.vue';
-import PokemonJpName from '@/components/card_details/PokemonJpName.vue';
+import PokemonImages from '@/components/card/PokemonImages.vue';
+import PokemonJpName from '@/components/card/PokemonJpName.vue';
 
 const props = defineProps({
   data: {
