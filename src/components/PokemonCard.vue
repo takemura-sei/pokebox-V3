@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div>
+  <div class="bg-white p-2 rounded-lg">
     <PokemonJpName :name="props.data.name" :url="props.data.url"/>
     <PokemonImages :name="props.data.name" :url="props.data.url"/>
   </div>

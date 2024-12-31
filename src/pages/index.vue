@@ -13,7 +13,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="pokemonDataStore.displayPokemonList" class="container">
-    <ul class="flex flex-wrap">
+    <ul class="flex flex-wrap gap-3 justify-center">
       <li v-for="pokemon in pokemonDataStore.displayPokemonList" :key="pokemon">
         <PokemonCard :data="pokemon" />
       </li>
