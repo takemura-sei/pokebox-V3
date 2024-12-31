@@ -1,22 +1,7 @@
 // src/stores/pokemonList.ts
-import { fetchPokemonData, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
 import { defineStore } from "pinia";
-
-type DisplayImageDataType = {
-  [key: string]: string,
-};
-
-type DisplayJpNameDataType = {
-  [key: string]: string,
-};
-
-type LanguageNameObjType = {
-  language: {
-    name: string;
-    url: string;
-  };
-  name: string;
-};
+import { fetchPokemonData, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
+import type { DisplayImageDataType, DisplayJpNameDataType, LanguageNameObjType } from "@/types/pokemonTypes";
 
 export const usePokemonDataStore = defineStore('pokemon', {
   state: () => ({
