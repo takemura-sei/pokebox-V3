@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { usePokemonDataStore } from '@/stores/pokemonDataStore';
+import { usePaginationStore } from '@/stores/paginationStore';
 import PokemonCard from '@/components/card/PokemonCard.vue';
 
 const pokemonDataStore = usePokemonDataStore();
+const paginationStore = usePaginationStore();
 
 onMounted(async () => {
   await pokemonDataStore.loadPokemonSelection();
 });
 
+// ページ変更を監視してデータを再取得
+watch(() => paginationStore.currentPage, () => {
+  pokemonDataStore.loadPokemonSelection()
+})
 </script>
 
 <template>
