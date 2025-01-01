@@ -1,12 +1,14 @@
 <!-- src/pages/index.vue -->
 <script setup lang="ts">
 import PokemonList from '@/components/PokemonList.vue';
+import Pagination from '@/components/pagination/Pagination.vue';
 
 </script>
 
 <template>
   <div class="container">
     <PokemonList />
+    <Pagination />
   </div>
 </template>
 

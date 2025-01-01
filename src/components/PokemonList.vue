@@ -5,7 +5,7 @@ import PokemonCard from '@/components/card/PokemonCard.vue';
 const pokemonDataStore = usePokemonDataStore();
 
 onMounted(async () => {
-  await pokemonDataStore.loadPokemonApi();
+  await pokemonDataStore.loadPokemonSelection();
 });
 
 </script>
