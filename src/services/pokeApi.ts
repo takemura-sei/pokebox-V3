@@ -12,10 +12,7 @@ const fetchPokemonData = async() => {
   return response.data;
 };
 
-const fetchPokemonSelectionData = async(offset: number, limit: number) => {
-  const remainingPokemons = 151 - offset;
-  const finalLimit = remainingPokemons < limit ? remainingPokemons : limit;
-
+const fetchPokemonSelectionData = async(offset: number, finalLimit: number) => {
   const { $pokeApiPlugin } = useNuxtApp();
   const response = await $pokeApiPlugin.get(`pokemon/?offset=${offset}&limit=${finalLimit}`);
   return response.data;

@@ -1,10 +1,8 @@
 // src/stores/pokemonList.ts
 import { defineStore } from "pinia";
-import { usePaginationStore } from "~/stores/paginationStore";
-import { fetchPokemonData, fetchPokemonSelectionData, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
+import { fetchPokemonSelectionData, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
+import { getDisplayRange } from "@/utils/displayRangeUtils";
 import type { DisplayImageDataType, DisplayJpNameDataType, LanguageNameObjType } from "@/types/pokemonTypes";
-
-// const paginationStore = usePaginationStore();
 
 export const usePokemonDataStore = defineStore('pokemon', {
   state: () => ({
@@ -13,17 +11,10 @@ export const usePokemonDataStore = defineStore('pokemon', {
     displayJpNameData: {} as DisplayJpNameDataType,
   }),
   actions: {
-    async loadPokemonApi() {
-      const response = await fetchPokemonData();
-      this.displayPokemonList = response.results;
-    },
     async loadPokemonSelection() {
-      const paginationStore = usePaginationStore();
-      const offset = (paginationStore.currentPage - 1) * paginationStore.itemsPerPage;
-      const limit = paginationStore.itemsPerPage;
-      const response = await fetchPokemonSelectionData(offset, limit);
+      const { offset, finalLimit } = getDisplayRange();
+      const response = await fetchPokemonSelectionData(offset, finalLimit);
       this.displayPokemonList = response.results;
-      paginationStore.setTotalPage();
     },
     async loadPokemonImage(name: string, endpoint: string) {
       const response = await fetchSingleData(endpoint);
