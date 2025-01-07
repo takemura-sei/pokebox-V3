@@ -1,28 +1,24 @@
-<script setup lang="ts">
-import { usePokemonDataStore } from '@/stores/pokemonDataStore';
-import { usePaginationStore } from '@/stores/paginationStore';
-import PokemonCard from '@/components/card/PokemonCard.vue';
+<script setup>
+import axios from 'axios'
 
-const pokemonDataStore = usePokemonDataStore();
-const paginationStore = usePaginationStore();
+// 画像URLを格納するリアクティブな変数を定義（初期値はnull）
+const pokemonImage = ref(null)
 
-onMounted(async () => {
-  await pokemonDataStore.loadPokemonSelection();
-});
+// リザードンの画像を取得する非同期関数
+const fetchCharizardImage = async () => {
+  const response = await axios.get('https://pokeapi.co/api/v2/pokemon/6')
+  pokemonImage.value = response.data.sprites.front_default
+}
 
-// ページ変更を監視してデータを再取得
-watch(() => paginationStore.currentPage, () => {
-  pokemonDataStore.loadPokemonSelection()
+// コンポーネントが画面に表示されたときにデータを取得
+onMounted(() => {
+  fetchCharizardImage()
 })
+
 </script>
 
 <template>
-  <div v-if="pokemonDataStore.displayPokemonList" class="container">
-    <ul class="flex flex-wrap gap-3 justify-center">
-      <li v-for="pokemon in pokemonDataStore.displayPokemonList" :key="pokemon">
-        <PokemonCard :data="pokemon" />
-      </li>
-    </ul>
+  <div class="container">
+    <img :src="pokemonImage" alt="リザードン" />
   </div>
-  <p v-else>Loading Pokémon data...</p>
 </template>
