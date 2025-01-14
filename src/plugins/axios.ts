@@ -1,3 +1,4 @@
+// src/plugins/axios.ts
 import axios from 'axios';
 
 export default defineNuxtPlugin(() => {

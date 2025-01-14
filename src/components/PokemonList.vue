@@ -1,24 +1,41 @@
 <script setup>
-import axios from 'axios'
+import { usePokemonDataStore } from '#build/imports';
 
-// 画像URLを格納するリアクティブな変数を定義（初期値はnull）
-const pokemonImage = ref(null)
+const pokemonDataStore = usePokemonDataStore();
 
-// リザードンの画像を取得する非同期関数
-const fetchCharizardImage = async () => {
-  const response = await axios.get('https://pokeapi.co/api/v2/pokemon/6')
-  pokemonImage.value = response.data.sprites.front_default
-}
+// ポケモンの名前と ID のリスト
+const pokemonList = [
+  { id: 3 },
+  { id: 6 },
+  { id: 9 },
+];
 
-// コンポーネントが画面に表示されたときにデータを取得
+// データ取得処理
+const fetchPokemonData = async () => {
+  for (const pokemon of pokemonList) {
+    await pokemonDataStore.loadPokemonImage(pokemon.id.toString());
+    await pokemonDataStore.loadPokemonJpName(pokemon.id.toString());
+  }
+};
+
+// コンポーネントが表示されたときにデータを取得
 onMounted(() => {
-  fetchCharizardImage()
-})
-
+  fetchPokemonData();
+});
 </script>
 
 <template>
   <div class="container">
-    <img :src="pokemonImage" alt="リザードン" />
+    <div v-for="pokemon in pokemonList" :key="pokemon.id" class="pokemon-card">
+      <p>{{ pokemonDataStore.displayJpNameData[pokemon.id] }}</p>
+      <img :src="pokemonDataStore.displayImageData[pokemon.id]"/>
+    </div>
   </div>
 </template>
+
+<style>
+.container {
+  display: flex;
+  gap: 15px;
+}
+</style>
