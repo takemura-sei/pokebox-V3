@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
   <div class="modal-overlay" @click.stop="$emit('close')">
-    <div class="modal-content">
+    <div class="modal-content" @click.stop>
       <PokemonJpName :name="name" :url="url"/>
       <PokemonImages :name="name" :url="url"/>
       <button class="close-button" @click.stop="$emit('close')">閉じる</button>
