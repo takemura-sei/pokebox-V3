@@ -1,14 +1,15 @@
+// src/composables/useModal.ts
 export default function useModal() {
   const isModalOpen = ref(false)
 
   const openModal = () => {
-    console.log('ok');
-    isModalOpen.value = true
+    isModalOpen.value = true;
+    console.log('ok', isModalOpen.value);
   }
 
   const closeModal = () => {
-    isModalOpen.value = false
-    console.log('false');
+    isModalOpen.value = false;
+    console.log('false', isModalOpen.value);
   }
 
   return {

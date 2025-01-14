@@ -1,9 +1,7 @@
+<!-- src/components/modal/Modal.vue -->
 <script setup>
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
-import useModal from '@/composables/useModal';
-
-const { closeModal } = useModal();
 
 const props = defineProps({
   name: {
@@ -19,11 +17,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="modal-overlay" @click="closeModal()">
+  <div class="modal-overlay" @click.stop="$emit('close')">
     <div class="modal-content">
       <PokemonJpName :name="name" :url="url"/>
       <PokemonImages :name="name" :url="url"/>
-      <button class="close-button" @click="closeModal()">閉じる</button>
+      <button class="close-button" @click.stop="$emit('close')">閉じる</button>
     </div>
   </div>
 </template>
