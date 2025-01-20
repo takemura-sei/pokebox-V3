@@ -13,3 +13,7 @@ export type LanguageNameObjType = {
   };
   name: string;
 };
+
+export type FavoriteBoxType = {
+  [key: string]: string;
+}
