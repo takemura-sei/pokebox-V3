@@ -1,4 +1,4 @@
-import { usePaginationStore } from "~/stores/paginationStore";
+import { usePaginationStore } from "@/stores/paginationStore";
 
 export const getDisplayRange = () => {
   const paginationStore = usePaginationStore();

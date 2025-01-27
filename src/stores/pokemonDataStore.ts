@@ -1,4 +1,4 @@
-// src/stores/pokemonList.ts
+// src/stores/pokemonDataStore.ts
 import { defineStore } from "pinia";
 import { fetchPokemonSelectionData, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
 import { getDisplayRange } from "@/utils/displayRangeUtils";

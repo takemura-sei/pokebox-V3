@@ -1,9 +1,16 @@
 // src/services/pokeApi.ts
 export {
+  fetchPokemonDataV2,
   fetchPokemonData,
   fetchPokemonSelectionData,
   fetchSingleData,
   fetchSpeciesData
+};
+
+const fetchPokemonDataV2 = async() => {
+  const { $pokeApiPlugin } = useNuxtApp();
+  const response = await $pokeApiPlugin.get(`pokemon/?offset=0&limit=151`);
+  return response.data;
 };
 
 const fetchPokemonData = async() => {
