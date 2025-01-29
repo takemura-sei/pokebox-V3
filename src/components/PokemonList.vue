@@ -1,25 +1,19 @@
 <script setup lang="ts">
-import { usePokemonDataStore } from '@/stores/pokemonDataStore';
-import { usePaginationStore } from '@/stores/paginationStore';
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
 import PokemonCard from '@/components/card/PokemonCard.vue';
 
-const pokemonDataStore = usePokemonDataStore();
-const paginationStore = usePaginationStore();
+const pokemonDataStore = usePokemonDataStoreV2();
 
+// 初回データロード
 onMounted(async () => {
-  await pokemonDataStore.loadPokemonSelection();
+  await pokemonDataStore.loadAllPokemonData();
 });
-
-// ページ変更を監視してデータを再取得
-watch(() => paginationStore.currentPage, () => {
-  pokemonDataStore.loadPokemonSelection()
-})
 </script>
 
 <template>
-  <div v-if="pokemonDataStore.displayPokemonList" class="container">
+  <div v-if="pokemonDataStore.paginatedPokemonList.length" class="container">
     <ul class="flex flex-wrap gap-3 justify-center">
-      <li v-for="pokemon in pokemonDataStore.displayPokemonList" :key="pokemon">
+      <li v-for="pokemon in pokemonDataStore.paginatedPokemonList" :key="pokemon.name">
         <PokemonCard :data="pokemon" />
       </li>
     </ul>

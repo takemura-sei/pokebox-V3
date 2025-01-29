@@ -1,66 +1,48 @@
 <script setup>
-import { usePaginationStore } from '@/stores/paginationStore'
-const paginationStore = usePaginationStore()
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
 
-const currentPage = computed(() => paginationStore.currentPage)
-const totalPages = computed(() => paginationStore.totalPages)
+const pokemonDataStore = usePokemonDataStoreV2();
 
-const isFirstPage = computed(() => currentPage.value === 1)
-const isLastPage = computed(() => currentPage.value === totalPages.value)
+// ページネーション操作
+const isFirstPage = computed(() => pokemonDataStore.currentPage === 1);
+const isLastPage = computed(() => {
+  const totalPages = Math.ceil(pokemonDataStore.allPokemonList.length / pokemonDataStore.itemsPerPage);
+  return pokemonDataStore.currentPage === totalPages;
+});
 
 const prevPage = () => {
   if (!isFirstPage.value) {
-    paginationStore.setCurrentPage(currentPage.value - 1)
+    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage - 1);
   }
-}
+};
 
 const nextPage = () => {
   if (!isLastPage.value) {
-    paginationStore.setCurrentPage(currentPage.value + 1)
+    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage + 1);
   }
-}
+};
 </script>
 
 <template>
-  <nav aria-label="Pagination">
-    <ul class="pagination">
-      <li>
-        <button @click="prevPage" :disabled="isFirstPage">＜</button>
-      </li>
-      <li>
-        <button>
-          {{ currentPage }}
-        </button>
-      </li>
-      <li>
-        <button @click="nextPage" :disabled="isLastPage">＞</button>
-      </li>
-    </ul>
+  <nav aria-label="Pagination" class="flex justify-center items-center mt-4">
+    <button @click="prevPage" :disabled="isFirstPage">＜</button>
+    <span>Page {{ pokemonDataStore.currentPage }}</span>
+    <button @click="nextPage" :disabled="isLastPage">＞</button>
   </nav>
 </template>
 
 <style scoped>
-.pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  margin-top: 32px;
-}
-
-.pagination li {
+button {
   margin: 0 5px;
-}
-
-.pagination li button {
-  padding: 10px 15px;
+  padding: 8px 16px;
   border: none;
-  border-radius: 20px;
-  background-color: #fff;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-
-button.active {
-  font-weight: bold;
-  color: blue;
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
 }
 </style>
