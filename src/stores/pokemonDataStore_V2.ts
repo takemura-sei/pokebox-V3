@@ -5,19 +5,31 @@ import type { DisplayImageDataType, DisplayJpNameDataType, FavoriteBoxType, Lang
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
-    allPokemonList: [] as { name: string; url: string }[],
+    pokemonList: [] as { name: string; url: string }[],
     paginatedPokemonList: [] as { name: string; url: string }[], // 現在表示中のページデータ
     displayImageData: {} as DisplayImageDataType,
     displayJpNameData: {} as DisplayJpNameDataType,
     favoriteBox: {} as FavoriteBoxType,
     itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
+    showFavorites: false as Boolean,
   }),
+  getters: {
+    filteredPokemonList(state) {
+      if (state.showFavorites) {
+        return Object.keys(state.favoriteBox).map(name => ({
+          name,
+          url: state.favoriteBox[name]
+        }));
+      }
+      return state.paginatedPokemonList;
+    }
+  },
   actions: {
     // 151匹のポケモンを一括取得
     async loadAllPokemonData() {
       const response = await fetchPokemonDataV2();
-      this.allPokemonList = response.results;
+      this.pokemonList = response.results;
       this.updatePaginatedList(1); // 初回ロード時は1ページ目を設定
     },
     // ポケモンの画像を取得
@@ -46,11 +58,16 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         delete this.favoriteBox[name];
       }
     },
+    // お気に入り表示の切り替え
+    toggleShowFavorites() {
+      this.showFavorites = !this.showFavorites;
+    },
     // ページデータを更新
     updatePaginatedList(page: number) {
+      if (this.showFavorites) return; // お気に入り表示時はページネーションを変更しない
       const startIndex = (page - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      this.paginatedPokemonList = this.allPokemonList.slice(startIndex, endIndex);
+      this.paginatedPokemonList = this.pokemonList.slice(startIndex, endIndex);
       this.currentPage = page;
     },
   },
