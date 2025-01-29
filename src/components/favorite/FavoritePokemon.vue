@@ -1,8 +1,8 @@
 <script setup>
-import { useFavoriteStore } from '@/stores/favoriteStore';
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
 import { toggleFavorite } from '@/utils/toggleFavorite';
 
-const favoriteStore = useFavoriteStore()
+const pokemonDataStore= usePokemonDataStoreV2()
 
 const props = defineProps({
   name: {
@@ -15,7 +15,7 @@ const props = defineProps({
   }
 })
 
-const isFavorite = computed(() => !!favoriteStore.favoriteBox[props.name])
+const isFavorite = computed(() => !!pokemonDataStore.favoriteBox[props.name])
 </script>
 
 <template>

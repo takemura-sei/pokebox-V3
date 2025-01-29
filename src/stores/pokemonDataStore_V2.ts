@@ -1,7 +1,7 @@
 // src/stores/pokemonDataStore_V2.ts
 import { defineStore } from "pinia";
 import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
-import type { DisplayImageDataType, DisplayJpNameDataType, LanguageNameObjType } from "@/types/pokemonTypes";
+import type { DisplayImageDataType, DisplayJpNameDataType, FavoriteBoxType, LanguageNameObjType } from "@/types/pokemonTypes";
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
@@ -9,6 +9,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     paginatedPokemonList: [] as { name: string; url: string }[], // 現在表示中のページデータ
     displayImageData: {} as DisplayImageDataType,
     displayJpNameData: {} as DisplayJpNameDataType,
+    favoriteBox: {} as FavoriteBoxType,
     itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
   }),
@@ -32,6 +33,18 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         (obj: LanguageNameObjType) => obj.language.name === 'ja'
       );
       this.displayJpNameData[name] = jpNameObj.name;
+    },
+    // お気に入りに追加
+    choiseFavoritePokemon(name: string, endpoint: string) {
+      if (!this.favoriteBox[name]) {
+        this.favoriteBox[name] = endpoint;
+      } 
+    },
+    // お気に入りから削除
+    deleteFavoritePokemon(name: string) {
+      if (this.favoriteBox[name]) {
+        delete this.favoriteBox[name];
+      }
     },
     // ページデータを更新
     updatePaginatedList(page: number) {
