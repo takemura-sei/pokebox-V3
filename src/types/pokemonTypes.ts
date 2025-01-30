@@ -1,9 +1,11 @@
+export type PokemonListType = { name: string, url: string }[];
+
 export type DisplayImageDataType = {
-  [key: string]: string;
+  [name: string]: string;
 };
 
 export type DisplayJpNameDataType = {
-  [key: string]: string;
+  [name: string]: string;
 };
 
 export type LanguageNameObjType = {
@@ -13,7 +15,3 @@ export type LanguageNameObjType = {
   };
   name: string;
 };
-
-export type FavoriteBoxType = {
-  [key: string]: string;
-}

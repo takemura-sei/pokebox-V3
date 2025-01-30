@@ -19,7 +19,9 @@ const props = defineProps({
   }
 })
 
-const isFavorite = computed(() => !!pokemonDataStore.favoriteBox[props.name])
+const isFavorite = computed(() =>
+  pokemonDataStore.favoriteBox.some(pokemon => pokemon.name === props.name)
+);
 </script>
 
 <template>
