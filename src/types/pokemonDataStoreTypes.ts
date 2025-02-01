@@ -1,10 +1,6 @@
 export type PokemonListType = { name: string, url: string }[];
 
-export type DisplayImageDataType = {
-  [name: string]: string;
-};
-
-export type DisplayJpNameDataType = {
+export type DisplayDataType = {
   [name: string]: string;
 };
 

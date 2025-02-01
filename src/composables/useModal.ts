@@ -4,12 +4,10 @@ export default function useModal() {
 
   const openModal = () => {
     isModalOpen.value = true;
-    console.log('ok', isModalOpen.value);
   }
 
   const closeModal = () => {
     isModalOpen.value = false;
-    console.log('false', isModalOpen.value);
   }
 
   return {

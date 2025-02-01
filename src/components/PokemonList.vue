@@ -6,7 +6,7 @@ const pokemonDataStore = usePokemonDataStoreV2();
 
 // 初回データロード
 onMounted(async () => {
-  await pokemonDataStore.loadAllPokemonData();
+  await pokemonDataStore.getPokemonList();
 });
 </script>
 

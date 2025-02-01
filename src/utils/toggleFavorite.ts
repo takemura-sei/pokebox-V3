@@ -7,10 +7,8 @@ export const toggleFavorite = (isVisible: boolean, name: string, url: string) =>
   const pokemonDataStore = usePokemonDataStoreV2($pinia); // インスタンスを渡してストアを初期化
 
   if (!isVisible) {
-    pokemonDataStore.choiseFavoritePokemon(name, url); 
-    console.log(pokemonDataStore.favoriteBox);
+    pokemonDataStore.addFavoritePokemon(name, url); 
   } else {
     pokemonDataStore.deleteFavoritePokemon(name);
-    console.log(pokemonDataStore.favoriteBox);
   }
 };

@@ -218,7 +218,7 @@ const props = defineProps({
   }
 })
 
-const isFavorite = computed(() => !!pokemonDataStore.favoriteBox[props.name])
+const isFavorite = computed(() => !!pokemonDataStore.favoritePokemonList[props.name])
 </script>
 
 <template>
@@ -289,7 +289,7 @@ const props = defineProps({
   }
 })
 
-const isFavorite = computed(() => !!pokemonDataStore.favoriteBox[props.name])
+const isFavorite = computed(() => !!pokemonDataStore.favoritePokemonList[props.name])
 </script>
 
 <template>
@@ -345,13 +345,13 @@ const isLastPage = computed(() => {
 
 const prevPage = () => {
   if (!isFirstPage.value) {
-    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage - 1);
+    pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage - 1);
   }
 };
 
 const nextPage = () => {
   if (!isLastPage.value) {
-    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage + 1);
+    pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage + 1);
   }
 };
 </script>
@@ -536,7 +536,7 @@ File: src/stores/pokemonDataStore_V2.ts
 // src/stores/pokemonDataStore_V2.ts
 import { defineStore } from "pinia";
 import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
-import type { DisplayImageDataType, DisplayJpNameDataType, FavoriteBoxType, LanguageNameObjType } from "@/types/pokemonTypes";
+import type { DisplayImageDataType, DisplayJpNameDataType, favoritePokemonListType, LanguageNameObjType } from "@/types/pokemonTypes";
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
@@ -544,7 +544,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     paginatedPokemonList: [] as { name: string; url: string }[], // 現在表示中のページデータ
     displayImageData: {} as DisplayImageDataType,
     displayJpNameData: {} as DisplayJpNameDataType,
-    favoriteBox: {} as FavoriteBoxType,
+    favoritePokemonList: {} as favoritePokemonListType,
     itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
   }),
@@ -553,7 +553,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     async loadAllPokemonData() {
       const response = await fetchPokemonDataV2();
       this.allPokemonList = response.results;
-      this.updatePaginatedList(1); // 初回ロード時は1ページ目を設定
+      this.updatePaginatedPokemonList(1); // 初回ロード時は1ページ目を設定
     },
     // ポケモンの画像を取得
     async loadPokemonImage(name: string, endpoint: string) {
@@ -570,19 +570,19 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       this.displayJpNameData[name] = jpNameObj.name;
     },
     // お気に入りに追加
-    choiseFavoritePokemon(name: string, endpoint: string) {
-      if (!this.favoriteBox[name]) {
-        this.favoriteBox[name] = endpoint;
+    addFavoritePokemon(name: string, endpoint: string) {
+      if (!this.favoritePokemonList[name]) {
+        this.favoritePokemonList[name] = endpoint;
       } 
     },
     // お気に入りから削除
     deleteFavoritePokemon(name: string) {
-      if (this.favoriteBox[name]) {
-        delete this.favoriteBox[name];
+      if (this.favoritePokemonList[name]) {
+        delete this.favoritePokemonList[name];
       }
     },
     // ページデータを更新
-    updatePaginatedList(page: number) {
+    updatePaginatedPokemonList(page: number) {
       const startIndex = (page - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
       this.paginatedPokemonList = this.allPokemonList.slice(startIndex, endIndex);
@@ -610,7 +610,7 @@ export type LanguageNameObjType = {
   name: string;
 };
 
-export type FavoriteBoxType = {
+export type favoritePokemonListType = {
   [key: string]: string;
 }
 
@@ -626,11 +626,11 @@ export const toggleFavorite = (isVisible: boolean, name: string, url: string) =>
   const pokemonDataStore = usePokemonDataStoreV2($pinia); // インスタンスを渡してストアを初期化
 
   if (!isVisible) {
-    pokemonDataStore.choiseFavoritePokemon(name, url); 
-    console.log(pokemonDataStore.favoriteBox);
+    pokemonDataStore.addFavoritePokemon(name, url); 
+    console.log(pokemonDataStore.favoritePokemonList);
   } else {
     pokemonDataStore.deleteFavoritePokemon(name);
-    console.log(pokemonDataStore.favoriteBox);
+    console.log(pokemonDataStore.favoritePokemonList);
   }
 };
 

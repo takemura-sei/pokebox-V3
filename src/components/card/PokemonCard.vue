@@ -23,7 +23,7 @@ const props = defineProps({
     <div class="flex">
       <PokemonJpName :name="data.name" :url="data.url"/>
       <svg
-        v-if="usePokemonDataStore.favoriteBox.some(pokemon => pokemon.name === data.name)"
+        v-if="usePokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === data.name)"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         class="favorite-icon favorite-active"

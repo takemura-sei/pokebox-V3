@@ -12,13 +12,13 @@ const isLastPage = computed(() => {
 
 const prevPage = () => {
   if (!isFirstPage.value) {
-    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage - 1);
+    pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage - 1);
   }
 };
 
 const nextPage = () => {
   if (!isLastPage.value) {
-    pokemonDataStore.updatePaginatedList(pokemonDataStore.currentPage + 1);
+    pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage + 1);
   }
 };
 </script>
