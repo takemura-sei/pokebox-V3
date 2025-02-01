@@ -6,17 +6,18 @@ import type { PokemonListType, DisplayImageDataType, DisplayJpNameDataType, Lang
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
     pokemonList: [] as PokemonListType,
+    displayPokemonList: [] as PokemonListType,
     paginatedPokemonList: [] as PokemonListType,
     favoriteBox: [] as PokemonListType,
     displayImageData: {} as DisplayImageDataType,
     displayJpNameData: {} as DisplayJpNameDataType,
     itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
-    showFavorites: false as Boolean,
+    showFavorites: false as boolean,
   }),
   getters: {
     filteredPokemonList(state) {
-      return state.showFavorites ? state.favoriteBox : state.paginatedPokemonList;
+      return state.paginatedPokemonList;
     }
   },
   actions: {
@@ -24,7 +25,12 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     async loadAllPokemonData() {
       const response = await fetchPokemonDataV2();
       this.pokemonList = response.results;
+      this.setDisplayPokemonList(this.pokemonList); // 実際に表示されるリストにも格納しておく
       this.updatePaginatedList(1); // 初回ロード時は1ページ目を設定
+    },
+    // 表示させるポケモンリスト
+    setDisplayPokemonList(list: PokemonListType) {
+      this.displayPokemonList = list;
     },
     // お気に入りに追加
     choiseFavoritePokemon(name: string, url: string) {
@@ -39,13 +45,15 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     // お気に入り表示の切り替え
     toggleShowFavorites() {
       this.showFavorites = !this.showFavorites;
+      this.setDisplayPokemonList(this.showFavorites ? this.favoriteBox : this.pokemonList);
+      this.updatePaginatedList(1);
     },
     // ページデータを更新
     updatePaginatedList(page: number) {
-      if (this.showFavorites) return; // お気に入り表示時はページネーションを変更しない
+      const sourceList = this.displayPokemonList;
       const startIndex = (page - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      this.paginatedPokemonList = this.pokemonList.slice(startIndex, endIndex);
+      this.paginatedPokemonList = sourceList.slice(startIndex, endIndex);
       this.currentPage = page;
     },
     // ポケモンの画像を取得
