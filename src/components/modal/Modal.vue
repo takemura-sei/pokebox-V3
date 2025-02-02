@@ -28,8 +28,8 @@ const isFavorite = computed(() =>
   <div class="modal-overlay" @click.stop="$emit('close')">
     <div class="modal-content" @click.stop>
       <FavoritePokemon :name="name" :url="url"/>
-      <PokemonJpName :name="name" :url="url"/>
-      <PokemonImages :name="name" :url="url"/>
+      <PokemonJpName :name="name"/>
+      <PokemonImages :name="name"/>
       <button class="block" @click="toggleFavorite(isFavorite, name, url)">お気に入り</button>
       <button class="close-button" @click.stop="$emit('close')">閉じる</button>
     </div>

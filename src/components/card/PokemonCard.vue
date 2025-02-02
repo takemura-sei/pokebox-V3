@@ -34,7 +34,7 @@ const props = defineProps({
         />
       </svg>
     </div>
-    <PokemonImages :name="data.name" :url="data.url"/>
+    <PokemonImages :name="data.name"/>
 
     <!-- モーダルウィンドウの表示 -->
     <Modal v-if="isModalOpen" :name="data.name" :url="data.url" @close="closeModal()"/>

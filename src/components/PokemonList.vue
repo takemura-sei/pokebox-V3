@@ -7,22 +7,26 @@ const pokemonDataStore = usePokemonDataStoreV2();
 // 初回データロード
 onMounted(async () => {
   await pokemonDataStore.getPokemonList();
+  pokemonDataStore.getPokemonIdList();
+  pokemonDataStore.loadPokemonImageV2();
+  pokemonDataStore.loadPokemonJpNameV2();
 });
 </script>
 
 <template>
-  <button @click="pokemonDataStore.toggleShowFavorites" class="toggle-button">
-      {{ pokemonDataStore.showFavorites ? '全ポケモンを見る' : 'お気に入りのみ表示' }}
-  </button>
-
-  <div v-if="pokemonDataStore.filteredPokemonList.length" class="container">
-    <ul class="flex flex-wrap gap-3 justify-center">
-      <li v-for="pokemon in pokemonDataStore.filteredPokemonList" :key="pokemon.name">
-        <PokemonCard :data="pokemon" />
-      </li>
-    </ul>
+  <div>
+    <button @click="pokemonDataStore.toggleShowFavorites" class="toggle-button">
+        {{ pokemonDataStore.showFavorites ? '全ポケモンを見る' : 'お気に入りのみ表示' }}
+    </button>
+    <div v-if="pokemonDataStore.filteredPokemonList.length" class="container">
+      <ul class="flex flex-wrap gap-3 justify-center">
+        <li v-for="pokemon in pokemonDataStore.filteredPokemonList" :key="pokemon.name">
+          <PokemonCard :data="pokemon" />
+        </li>
+      </ul>
+    </div>
+    <p v-else>Loading Pokémon data...</p>
   </div>
-  <p v-else>Loading Pokémon data...</p>
 </template>
 
 <style scoped>

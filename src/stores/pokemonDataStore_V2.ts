@@ -9,9 +9,10 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     displayPokemonList: [] as PokemonListType,
     paginatedPokemonList: [] as PokemonListType,
     favoritePokemonList: [] as PokemonListType,
-    displayImageData: {} as DisplayDataType,
-    displayJpNameData: {} as DisplayDataType,
-    itemsPerPage: 5, // 1ページあたりのポケモン数
+    displayIdData: {} as DisplayDataType,
+    displayImageDataV2: {} as DisplayDataType,
+    displayJpNameDataV2: {} as DisplayDataType,
+    itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
     showFavorites: false as boolean,
   }),
@@ -56,19 +57,31 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       this.paginatedPokemonList = sourceList.slice(startIndex, endIndex);
       this.currentPage = page;
     },
-    // ポケモンの画像を取得
-    async loadPokemonImage(name: string, endpoint: string) {
-      const response = await fetchSingleData(endpoint);
-      const imageUrl = response.sprites.front_default;
-      this.displayImageData[name] = imageUrl;
+    // ポケモンのIDを格納する
+    getPokemonIdList() {
+      this.pokemonList.map((pokemon) => {
+        const id = getLastElementUrl(pokemon.url);
+        this.displayIdData[pokemon.name] = id;
+      });
     },
-    // ポケモンの日本語名を取得
-    async loadPokemonJpName(name: string, endpoint: string) {
-      const response = await fetchSpeciesData(endpoint);
-      const jpNameObj = response.names.find(
-        (obj: LanguageNameObjType) => obj.language.name === 'ja'
-      );
-      this.displayJpNameData[name] = jpNameObj.name;
+    // 先にポケモン画像を先に取得する
+    loadPokemonImageV2() {
+      this.pokemonList.map(async (pokemon) => {
+        const id = getLastElementUrl(pokemon.url);
+        const response = await fetchSingleData(id);
+        const imageUrl = response.sprites.front_default;
+        this.displayImageDataV2[pokemon.name] = imageUrl;
+      });
     },
+    loadPokemonJpNameV2() {
+      this.pokemonList.map(async (pokemon) => {
+        const id = getLastElementUrl(pokemon.url);
+        const response = await fetchSpeciesData(id);
+        const jpName = response.names.find(
+          (obj: LanguageNameObjType) => obj.language.name === 'ja'
+        );
+        this.displayJpNameDataV2[pokemon.name] = jpName.name;
+      });
+    }
   },
 });
