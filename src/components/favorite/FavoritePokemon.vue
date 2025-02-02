@@ -15,9 +15,11 @@ const props = defineProps({
   }
 })
 
-const isFavorite = computed(() =>
-  pokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name)
-);
+const isFavorite = ref(false);
+
+watchEffect(() => {
+  isFavorite.value = pokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name);
+});
 </script>
 
 <template>

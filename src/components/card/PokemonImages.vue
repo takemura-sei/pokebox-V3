@@ -19,8 +19,12 @@ const lastElementUrl = getLastElementUrl(props.url);
 
 onMounted(async () => {
   await pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
-  imageUrl.value = pokemonDataStore.displayImageData[props.name];
 })
+
+// `watchEffect` を追加して imageUrl をリアクティブに更新
+watchEffect(() => {
+  imageUrl.value = pokemonDataStore.displayImageData[props.name] || '';
+});
 
 </script>
 
