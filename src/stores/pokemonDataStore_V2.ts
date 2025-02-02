@@ -11,7 +11,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     favoritePokemonList: [] as PokemonListType,
     displayImageData: {} as DisplayDataType,
     displayJpNameData: {} as DisplayDataType,
-    itemsPerPage: 30, // 1ページあたりのポケモン数
+    itemsPerPage: 5, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
     showFavorites: false as boolean,
   }),

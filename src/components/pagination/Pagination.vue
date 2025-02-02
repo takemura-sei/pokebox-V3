@@ -6,7 +6,7 @@ const pokemonDataStore = usePokemonDataStoreV2();
 // ページネーション操作
 const isFirstPage = computed(() => pokemonDataStore.currentPage === 1);
 const isLastPage = computed(() => {
-  return pokemonDataStore.paginatedPokemonList.length < pokemonDataStore.itemsPerPage;
+  return pokemonDataStore.currentPage * pokemonDataStore.itemsPerPage >= pokemonDataStore.displayPokemonList.length;
 });
 
 const prevPage = () => {
