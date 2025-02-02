@@ -2,7 +2,7 @@
 <script setup>
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
-import Modal from '@/components/modal/ Modal .vue';
+import Modal from '@/components/modal/Modal.vue'
 import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
 import useModal from '@/composables/useModal';
 
