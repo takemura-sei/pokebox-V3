@@ -13,7 +13,7 @@ export default function useModal() {
     // ここで store を呼び出す（関数内で使う）
     const favoriteDataStore = useFavoriteDataStore()
     if (!favoriteDataStore.favoritePokemonList.find(pokemon => pokemon.name === name)) {
-      favoriteDataStore.reloadFaovoritePage();
+      favoriteDataStore.reloadFaovoritePageFlag();
     }
   };
 

@@ -12,7 +12,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     displayIdData: {} as DisplayDataType,
     displayImageDataV2: {} as DisplayDataType,
     displayJpNameDataV2: {} as DisplayDataType,
-    itemsPerPage: 5, // 1ページあたりのポケモン数
+    itemsPerPage: 30, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
   }),
   getters: {

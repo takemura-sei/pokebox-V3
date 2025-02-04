@@ -27,7 +27,7 @@ onMounted(async () => {
         </li>
       </ul>
     </div>
-    <p v-else>Loading Pokémon data...</p>
+    <p v-else>{{ favoriteDataStore.showFavorites ? 'お気に入り登録しているポケモンがいません。' : 'Loading Pokémon data...' }}</p>
   </div>
 </template>
 

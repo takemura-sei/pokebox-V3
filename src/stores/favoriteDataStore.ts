@@ -29,16 +29,25 @@ export const useFavoriteDataStore = defineStore('favoriteData', {
         return idA - idB;
       });
     },
-    // お気に入りページの再レンダリング
-    reloadFaovoritePage() {
-      const pokemonDataStore = usePokemonDataStoreV2();
+    // お気に入りページの再レンダリングのフラグ
+    reloadFaovoritePageFlag() {
       if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
-        pokemonDataStore.setDisplayPokemonList(this.favoritePokemonList); 
-        pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage); 
+        this.reloadFaovoritePage();
       } 
       else {
         return;
       }
     },
+    // お気に入りページの再レンダリング
+    reloadFaovoritePage() {
+      const pokemonDataStore = usePokemonDataStoreV2();
+      if(pokemonDataStore.paginatedPokemonList.length === 1 && pokemonDataStore.currentPage !== 1) {
+        pokemonDataStore.setDisplayPokemonList(this.favoritePokemonList); 
+        pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage - 1);
+      } else {
+        pokemonDataStore.setDisplayPokemonList(this.favoritePokemonList); 
+        pokemonDataStore.updatePaginatedPokemonList(pokemonDataStore.currentPage);
+      }
+    }
   }
 })
