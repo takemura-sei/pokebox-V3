@@ -43,9 +43,19 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     // お気に入りから削除
     deleteFavoritePokemon(name: string) {
       this.favoritePokemonList = this.favoritePokemonList.filter(pokemon => pokemon.name !== name);
+      // if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
+      //   this.setDisplayPokemonList(this.favoritePokemonList); 
+      //   this.updatePaginatedPokemonList(this.currentPage); 
+      // }
+    },
+    // お気に入りページの再レンダリング
+    reloadFaovoritePage() {
       if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
         this.setDisplayPokemonList(this.favoritePokemonList); 
         this.updatePaginatedPokemonList(this.currentPage); 
+      } 
+      else {
+        return;
       }
     },
     // お気に入り表示の切り替え

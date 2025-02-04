@@ -37,7 +37,7 @@ const props = defineProps({
     <PokemonImages :name="data.name"/>
 
     <!-- モーダルウィンドウの表示 -->
-    <Modal v-if="isModalOpen" :name="data.name" :url="data.url" @close="closeModal()"/>
+    <Modal v-if="isModalOpen" :name="props.data.name" :url="props.data.url" @close="closeModal(props.data.name)"/>
   </div>
 </template>
 
