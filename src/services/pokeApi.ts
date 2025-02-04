@@ -9,7 +9,7 @@ export {
 
 const fetchPokemonDataV2 = async() => {
   const { $pokeApiPlugin } = useNuxtApp();
-  const response = await $pokeApiPlugin.get(`pokemon/?offset=0&limit=386`);
+  const response = await $pokeApiPlugin.get(`pokemon/?offset=0&limit=493`);
   return response.data;
 };
 

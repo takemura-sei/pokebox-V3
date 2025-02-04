@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 
 export default function useModal() {
   const isModalOpen = ref(false);

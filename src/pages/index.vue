@@ -7,7 +7,7 @@ import Pagination from '@/components/pagination/Pagination.vue';
 
 <template>
   <div class="container">
-    <PokemonList />
+    <PokemonList class="mb-8"/>
     <Pagination />
   </div>
 </template>
