@@ -3,10 +3,9 @@
 import FavoritePokemon from '@/components/favorite/FavoritePokemon.vue';
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
-import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
-import { toggleFavorite } from '@/utils/toggleFavorite';
+import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 
-const pokemonDataStore = usePokemonDataStoreV2();
+const favoriteDataStore = useFavoriteDataStore();
 
 const props = defineProps({
   name: {
@@ -20,7 +19,7 @@ const props = defineProps({
 })
 
 const isFavorite = computed(() =>
-  pokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name)
+  favoriteDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name)
 );
 </script>
 

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
+import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 import PokemonCard from '@/components/card/PokemonCard.vue';
 
 const pokemonDataStore = usePokemonDataStoreV2();
+const favoriteDataStore = useFavoriteDataStore();
 
 // 初回データロード
 onMounted(async () => {
@@ -16,7 +18,7 @@ onMounted(async () => {
 <template>
   <div>
     <button @click="pokemonDataStore.toggleShowFavorites" class="toggle-button">
-        {{ pokemonDataStore.showFavorites ? '全ポケモンを見る' : 'お気に入りのみ表示' }}
+        {{ favoriteDataStore.showFavorites ? '全ポケモンを見る' : 'お気に入りのみ表示' }}
     </button>
     <div v-if="pokemonDataStore.filteredPokemonList.length" class="container">
       <ul class="flex flex-wrap gap-3 justify-center">

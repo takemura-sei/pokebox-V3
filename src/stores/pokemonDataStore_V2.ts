@@ -2,19 +2,18 @@
 import { defineStore } from "pinia";
 import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
 import type { PokemonListType, DisplayDataType, LanguageNameObjType } from "@/types/pokemonDataStoreTypes";
+import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
     pokemonList: [] as PokemonListType,
     displayPokemonList: [] as PokemonListType,
     paginatedPokemonList: [] as PokemonListType,
-    favoritePokemonList: [] as PokemonListType,
     displayIdData: {} as DisplayDataType,
     displayImageDataV2: {} as DisplayDataType,
     displayJpNameDataV2: {} as DisplayDataType,
-    itemsPerPage: 30, // 1ページあたりのポケモン数
+    itemsPerPage: 5, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
-    showFavorites: false as boolean,
   }),
   getters: {
     filteredPokemonList(state) {
@@ -33,44 +32,12 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     setDisplayPokemonList(list: PokemonListType) {
       this.displayPokemonList = list;
     },
-    // お気に入りに追加
-    addFavoritePokemon(name: string, url: string) {
-      if (!this.favoritePokemonList.find(pokemon => pokemon.name === name)) {
-        this.favoritePokemonList.push({ name, url });
-        this.sortFavoritePokemonList();
-      }
-    },
-    // お気に入りから削除
-    deleteFavoritePokemon(name: string) {
-      this.favoritePokemonList = this.favoritePokemonList.filter(pokemon => pokemon.name !== name);
-      // if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
-      //   this.setDisplayPokemonList(this.favoritePokemonList); 
-      //   this.updatePaginatedPokemonList(this.currentPage); 
-      // }
-    },
-    // お気に入りページの再レンダリング
-    reloadFaovoritePage() {
-      if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
-        this.setDisplayPokemonList(this.favoritePokemonList); 
-        this.updatePaginatedPokemonList(this.currentPage); 
-      } 
-      else {
-        return;
-      }
-    },
     // お気に入り表示の切り替え
     toggleShowFavorites() {
-      this.showFavorites = !this.showFavorites;
-      this.setDisplayPokemonList(this.showFavorites ? this.favoritePokemonList : this.pokemonList);
+      const favoriteDataStore = useFavoriteDataStore();
+      favoriteDataStore.showFavorites = !favoriteDataStore.showFavorites;
+      this.setDisplayPokemonList(favoriteDataStore.showFavorites ? favoriteDataStore.favoritePokemonList : this.pokemonList);
       this.updatePaginatedPokemonList(1);
-    },
-    // お気に入りリストをポケモンナンバー順に並び替え
-    sortFavoritePokemonList() {
-      this.favoritePokemonList.sort((a, b) => {
-        const idA = Number(this.displayIdData[a.name]);
-        const idB = Number(this.displayIdData[b.name]);
-        return idA - idB;
-      });
     },
     // ページデータを更新
     updatePaginatedPokemonList(page: number) {
@@ -87,7 +54,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         this.displayIdData[pokemon.name] = id;
       });
     },
-    // 先にポケモン画像を先に取得する
+    // ポケモン画像を取得する
     loadPokemonImageV2() {
       this.pokemonList.map(async (pokemon) => {
         const id = getLastElementUrl(pokemon.url);
@@ -96,6 +63,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         this.displayImageDataV2[pokemon.name] = imageUrl;
       });
     },
+    // ポケモンの日本名を取得する
     loadPokemonJpNameV2() {
       this.pokemonList.map(async (pokemon) => {
         const id = getLastElementUrl(pokemon.url);

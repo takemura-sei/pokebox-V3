@@ -1,8 +1,7 @@
 <script setup>
-import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
-import { toggleFavorite } from '@/utils/toggleFavorite';
+import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 
-const pokemonDataStore= usePokemonDataStoreV2()
+const favoriteDataStore = useFavoriteDataStore()
 
 const props = defineProps({
   name: {
@@ -18,7 +17,7 @@ const props = defineProps({
 const isFavorite = ref(false);
 
 watchEffect(() => {
-  isFavorite.value = pokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name);
+  isFavorite.value = favoriteDataStore.favoritePokemonList.some(pokemon => pokemon.name === props.name);
 });
 </script>
 

@@ -3,10 +3,10 @@
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
 import Modal from '@/components/modal/Modal.vue'
-import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
+import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 import useModal from '@/composables/useModal';
 
-const usePokemonDataStore = usePokemonDataStoreV2();
+const favoriteDataStore = useFavoriteDataStore();
 
 const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -23,7 +23,7 @@ const props = defineProps({
     <div class="flex">
       <PokemonJpName :name="data.name" :url="data.url"/>
       <svg
-        v-if="usePokemonDataStore.favoritePokemonList.some(pokemon => pokemon.name === data.name)"
+        v-if="favoriteDataStore.favoritePokemonList.some(pokemon => pokemon.name === data.name)"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         class="favorite-icon favorite-active"

@@ -1,12 +1,12 @@
 // src/utils/toggleFavorite.ts
-import { usePokemonDataStoreV2 } from "@/stores/pokemonDataStore_V2";
+import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
 
 export const toggleFavorite = (isVisible: boolean, name: string, url: string) => {
-  const pokemonDataStore = usePokemonDataStoreV2();
+  const favoriteDataStore = useFavoriteDataStore();
 
   if (!isVisible) {
-    pokemonDataStore.addFavoritePokemon(name, url); 
+    favoriteDataStore.addFavoritePokemon(name, url); 
   } else {
-    pokemonDataStore.deleteFavoritePokemon(name);
+    favoriteDataStore.deleteFavoritePokemon(name);
   }
 };
