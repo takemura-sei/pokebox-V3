@@ -4,8 +4,10 @@ import FavoritePokemon from '@/components/favorite/FavoritePokemon.vue';
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
 import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
+import { useModalDataStore } from '@/stores/modalDataStore';
 
 const favoriteDataStore = useFavoriteDataStore();
+const modalDataStore = useModalDataStore();
 
 const props = defineProps({
   name: {
@@ -25,12 +27,14 @@ const isFavorite = computed(() =>
 
 <template>
   <div class="modal-overlay" @click.stop="$emit('close')">
-    <div class="modal-content" @click.stop>
+    <div v-if="modalDataStore.isFavoriteModalOpen" class="modal-content" @click.stop>
       <FavoritePokemon :name="name" :url="url"/>
       <PokemonJpName :name="name"/>
       <PokemonImages :name="name"/>
       <button class="block" @click="toggleFavorite(isFavorite, name, url)">お気に入り</button>
       <button class="close-button" @click.stop="$emit('close')">閉じる</button>
+    </div>
+    <div v-if="modalDataStore.isFilterModalOpen">
     </div>
   </div>
 </template>

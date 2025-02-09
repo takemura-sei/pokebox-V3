@@ -17,9 +17,6 @@ onMounted(async () => {
 
 <template>
   <div>
-    <button @click="pokemonDataStore.toggleShowFavorites" class="toggle-button">
-        {{ favoriteDataStore.showFavorites ? '全ポケモンを見る' : 'お気に入りのみ表示' }}
-    </button>
     <div v-if="pokemonDataStore.filteredPokemonList.length" class="container">
       <ul class="flex flex-wrap gap-3 justify-center">
         <li v-for="pokemon in pokemonDataStore.filteredPokemonList" :key="pokemon.name">
@@ -31,14 +28,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-.toggle-button {
-  background-color: #ffcc00;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-</style>
 

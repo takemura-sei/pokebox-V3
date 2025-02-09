@@ -1,14 +1,26 @@
 <!-- src/pages/index.vue -->
 <script setup lang="ts">
+import Filter from '@/components/filter/Filter.vue';
 import PokemonList from '@/components/PokemonList.vue';
 import Pagination from '@/components/pagination/Pagination.vue';
+import Modal from '@/components/modal/Modal.vue';
+import { useModalDataStore } from '@/stores/modalDataStore';
+
+const modalDataStore = useModalDataStore();
 
 </script>
 
 <template>
   <div class="container">
+    <Filter />
     <PokemonList class="mb-8"/>
     <Pagination />
+    <Modal
+      v-if="modalDataStore.isFavoriteModalOpen"
+      :name="modalDataStore.selectedPokemon?.name"
+      :url="modalDataStore.selectedPokemon?.url"
+      @close="modalDataStore.closeFavoriteModal(modalDataStore.selectedPokemon?.name)"
+    />
   </div>
 </template>
 

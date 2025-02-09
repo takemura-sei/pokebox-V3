@@ -4,11 +4,10 @@ import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
 import Modal from '@/components/modal/Modal.vue'
 import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
-import useModal from '@/composables/useModal';
+import { useModalDataStore } from '@/stores/modalDataStore';
 
 const favoriteDataStore = useFavoriteDataStore();
-
-const { isModalOpen, openModal, closeModal } = useModal();
+const modalDataStore = useModalDataStore();
 
 const props = defineProps({
   data: {
@@ -16,10 +15,16 @@ const props = defineProps({
     required: true
   }
 });
+
+// カードクリック時に、選択された Pokémon のデータをストアにセットしてモーダルを開く
+const onCardClick = () => {
+  modalDataStore.setSelectedPokemon(props.data);
+  modalDataStore.openFavoriteModal();
+};
 </script>
 
 <template>
-  <div class="bg-white p-2 rounded-lg" @click="openModal()">
+  <div class="bg-white p-2 rounded-lg" @click="onCardClick()">
     <div class="flex">
       <PokemonJpName :name="data.name" :url="data.url"/>
       <svg
@@ -35,9 +40,6 @@ const props = defineProps({
       </svg>
     </div>
     <PokemonImages :name="data.name"/>
-
-    <!-- モーダルウィンドウの表示 -->
-    <Modal v-if="isModalOpen" :name="props.data.name" :url="props.data.url" @close="closeModal(props.data.name)"/>
   </div>
 </template>
 

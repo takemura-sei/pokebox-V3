@@ -21,7 +21,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     }
   },
   actions: {
-    // 386匹のポケモンを一括取得
+    // 493匹のポケモンを一括取得
     async getPokemonList() {
       const response = await fetchPokemonDataV2();
       this.pokemonList = response.results;
