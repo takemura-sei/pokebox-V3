@@ -1,3 +1,4 @@
+// src/stores/modalDataStore
 import { defineStore } from "pinia";
 import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
 

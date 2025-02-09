@@ -1,18 +1,23 @@
 <!-- src/pages/index.vue -->
 <script setup lang="ts">
-import Filter from '@/components/filter/Filter.vue';
+import PageHeader from '@/components/pageHeader/PageHeader.vue';
 import PokemonList from '@/components/PokemonList.vue';
 import Pagination from '@/components/pagination/Pagination.vue';
 import Modal from '@/components/modal/Modal.vue';
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
 import { useModalDataStore } from '@/stores/modalDataStore';
 
+const pokemonDataStore = usePokemonDataStoreV2();
 const modalDataStore = useModalDataStore();
 
+onMounted(async () => {
+  await pokemonDataStore.getPokemonType();
+});
 </script>
 
 <template>
   <div class="container">
-    <Filter />
+    <PageHeader />
     <PokemonList class="mb-8"/>
     <Pagination />
     <Modal

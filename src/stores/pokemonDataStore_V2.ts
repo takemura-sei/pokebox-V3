@@ -1,6 +1,6 @@
 // src/stores/pokemonDataStore_V2.ts
 import { defineStore } from "pinia";
-import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
+import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData, fetchTypeData } from "@/services/pokeApi";
 import type { PokemonListType, DisplayDataType, LanguageNameObjType } from "@/types/pokemonDataStoreTypes";
 import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
 
@@ -9,6 +9,8 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     pokemonList: [] as PokemonListType,
     displayPokemonList: [] as PokemonListType,
     paginatedPokemonList: [] as PokemonListType,
+    // typeList: [] as Array<string>,
+    typeListData: {} as DisplayDataType,
     displayIdData: {} as DisplayDataType,
     displayImageDataV2: {} as DisplayDataType,
     displayJpNameDataV2: {} as DisplayDataType,
@@ -73,6 +75,18 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         );
         this.displayJpNameDataV2[pokemon.name] = jpName.name;
       });
-    }
+    },
+    // ポケモンのタイプ情報を取得する
+    async getPokemonType() {
+      const TYPE_NUMBER = 18; // ポケモンのタイプは18種類
+      for (let typeId: number = 1; typeId <= TYPE_NUMBER; typeId++) {
+        const response = await fetchTypeData(typeId);
+        const typeJpName = response.names.find(
+          (obj: LanguageNameObjType) => obj.language.name === 'ja'
+        );
+        this.typeListData[response.name] = typeJpName.name;
+      }
+      console.log(this.typeListData);
+    },
   },
 });

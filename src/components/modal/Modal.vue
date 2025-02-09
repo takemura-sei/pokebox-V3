@@ -34,7 +34,8 @@ const isFavorite = computed(() =>
       <button class="block" @click="toggleFavorite(isFavorite, name, url)">お気に入り</button>
       <button class="close-button" @click.stop="$emit('close')">閉じる</button>
     </div>
-    <div v-if="modalDataStore.isFilterModalOpen">
+    <div v-if="modalDataStore.isFilterModalOpen" class="modal-content" @click.stop>
+      
     </div>
   </div>
 </template>
