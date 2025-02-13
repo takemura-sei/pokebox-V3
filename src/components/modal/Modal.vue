@@ -57,6 +57,7 @@ const isFavorite = computed(() =>
 .modal-content {
   background: white;
   max-width: 50%;
+  min-width: 355px;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
