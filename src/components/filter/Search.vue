@@ -49,7 +49,7 @@ const handleReset = () => {
     </button>
     <button 
       @click="handleReset" 
-      class="border px-2 py-1 rounded"
+      class="border px-2 py-1 rounded reset-button"
     >
       条件をリセット
     </button>
@@ -61,6 +61,11 @@ const handleReset = () => {
   border-radius: 5px;
   color: #fff;
   background-color: #e40b20;
+}
+
+.reset-button {
+  background-color: #fff;
+  border: 1px solid #989898;
 }
 
 /* ボタンが disabled のときのスタイルを調整する場合 */
