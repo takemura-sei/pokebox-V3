@@ -24,7 +24,7 @@ const onCardClick = () => {
 
 <template>
   <div class="bg-white p-2 rounded-lg" @click="onCardClick()">
-    <div class="flex">
+    <div class="flex name-header">
       <PokemonJpName :name="data.name" :url="data.url"/>
       <svg
         v-if="favoriteDataStore.favoritePokemonList.some(pokemon => pokemon.name === data.name)"
@@ -53,5 +53,11 @@ const onCardClick = () => {
 /* 登録済みの場合の色 (黄色) */
 .favorite-active {
   color: #ffc107;
+}
+
+@media (max-width: 640px) {
+  .name-header {
+    flex-direction: column;
+  } 
 }
 </style>

@@ -115,7 +115,19 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       let filtered = [...this.pokemonList];
 
       //----------------------------------
-      // 1. 地方フィルタ
+      // 1. タイプフィルタ
+      //----------------------------------
+      if (filterTypeDataStore.filterTypeList.length > 0) {
+        // 選択されているタイプの文字列を配列で取得
+        const selectedTypes = filterTypeDataStore.filterTypeList.map(t => t.type);
+        filtered = filtered.filter((pokemon) => {
+          // pokemon.type1 or type2 のいずれかが含まれていればマッチ (OR検索)
+          return selectedTypes.includes(pokemon.type1 ?? '') || selectedTypes.includes(pokemon.type2 ?? '');
+        });
+      }
+
+      //----------------------------------
+      // 2. 地方フィルタ
       //----------------------------------
       if (filterAreaDataStore.filterAreaList.length > 0) {
         // 選択されている地方(area)を配列で取得
@@ -132,18 +144,6 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
           const inSinnoh = selectedAreas.includes('Sinnoh') && (idNum >= 387 && idNum <= 493);
 
           return inKanto || inJohto || inHoenn || inSinnoh;
-        });
-      }
-
-      //----------------------------------
-      // 2. タイプフィルタ
-      //----------------------------------
-      if (filterTypeDataStore.filterTypeList.length > 0) {
-        // 選択されているタイプの文字列を配列で取得
-        const selectedTypes = filterTypeDataStore.filterTypeList.map(t => t.type);
-        filtered = filtered.filter((pokemon) => {
-          // pokemon.type1 or type2 のいずれかが含まれていればマッチ (OR検索)
-          return selectedTypes.includes(pokemon.type1 ?? '') || selectedTypes.includes(pokemon.type2 ?? '');
         });
       }
 
