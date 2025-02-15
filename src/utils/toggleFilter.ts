@@ -1,13 +1,25 @@
 // src/utils/toggleFilter.ts
 import { useFilterTypeDataStore } from "@/stores/filterTypeDataStore";
+import { useFilterAreaDataStore } from "@/stores/filterAreaDataStore";
 
 export const toggleFilterType = (type: string, id: number) => {
-  const filterDataStore = useFilterTypeDataStore();
-  const exists = filterDataStore.filterTypeList.some(item => item.id === id);
+  const filterTypeDataStore = useFilterTypeDataStore();
+  const exists = filterTypeDataStore.filterTypeList.some(item => item.id === id);
 
   if (!exists) {
-    filterDataStore.addFilterType(type, id);
+    filterTypeDataStore.addFilterType(type, id);
   } else {
-    filterDataStore.deleteFilterType(id);
+    filterTypeDataStore.deleteFilterType(id);
   }
 };
+
+export const toggleFilterArea = (id: number, area: string) => {
+  const filterAreaDataStore = useFilterAreaDataStore();
+  const exists = filterAreaDataStore.filterAreaList.some(item => item.id === id);
+
+  if (!exists) {
+    filterAreaDataStore.addFilterArea(id, area);
+  } else {
+    filterAreaDataStore.deleteFilterArea(id);
+  }
+}

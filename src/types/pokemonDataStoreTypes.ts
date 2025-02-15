@@ -4,6 +4,8 @@ export type PokemonListType = { name: string, url: string }[];
 
 export type FilterListType = { type: string, id: number }[];
 
+export type FilterAreaType = { id: number, area: string }[];
+
 export type DisplayDataType = {
   [name: string]: string;
 };

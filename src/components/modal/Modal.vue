@@ -4,6 +4,7 @@ import FavoritePokemon from '@/components/favorite/FavoritePokemon.vue';
 import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
 import typeData from '@/components/filter/typeData.vue';
+import AreaData from '@/components/filter/AreaData.vue';
 import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 import { useModalDataStore } from '@/stores/modalDataStore';
 
@@ -36,7 +37,8 @@ const isFavorite = computed(() =>
       <button class="close-button" @click.stop="$emit('close')">閉じる</button>
     </div>
     <div v-if="modalDataStore.isFilterModalOpen" class="modal-content" @click.stop>
-      <typeData />
+      <typeData class="mb-5"/>
+      <AreaData />
     </div>
   </div>
 </template>

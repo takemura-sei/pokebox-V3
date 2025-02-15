@@ -15,7 +15,7 @@ const typeImage = typeImageData;
   <div>
     <div class="flex">
       <img src="@/assets/images/ball.svg" alt="" width="20" height="20">
-      <p class="ml-1">タイプ</p>
+      <p class="ml-2">タイプ</p>
     </div>
     <ul class="flex flex-wrap">
       <li
@@ -40,7 +40,7 @@ const typeImage = typeImageData;
 }
 
 .selectedType-filter {
-  border: 2px solid rgb(255, 119, 21);
+  border: 2px solid #fa0;
   border-radius: 5px;
 }
 
