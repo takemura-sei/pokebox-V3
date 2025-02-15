@@ -1,29 +1,16 @@
 <script setup>
-import { usePokemonDataStore } from '@/stores/pokemonDataStore';
-import { getLastElementUrl } from '@/utils/urlUtils';
-
-const pokemonDataStore = usePokemonDataStore();
-const jpName = ref('');
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
+const pokemonDataStore = usePokemonDataStoreV2();
 
 const props = defineProps({
   name: {
     type: String,
     required: true
-  },
-  url: {
-    type: String,
-    required: true
   }
 });
-const lastElementUrl = getLastElementUrl(props.url);
-
-onMounted(async () => {
-  await pokemonDataStore.loadPokemonJpName(props.name, lastElementUrl);
-  jpName.value = pokemonDataStore.displayJpNameData[props.name];
-})
 
 </script>
 
 <template>
-  <p>{{ jpName }}</p>
+  <p>{{ pokemonDataStore.displayJpNameDataV2[props.name] }}</p>
 </template>
