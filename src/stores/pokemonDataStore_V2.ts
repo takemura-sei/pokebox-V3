@@ -1,12 +1,12 @@
 // src/stores/pokemonDataStore_V2.ts
 import { defineStore } from "pinia";
-import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData, fetchTypeData } from "@/services/pokeApi";
-import type { PokemonListType, DisplayDataType, LanguageNameObjType } from "@/types/pokemonDataStoreTypes";
+import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
+import type { defaultPokemonListType, PokemonListType, DisplayDataType, LanguageNameObjType, PokemonTypesObjType } from "@/types/pokemonDataStoreTypes";
 import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
-    pokemonList: [] as PokemonListType,
+    pokemonList: [] as defaultPokemonListType,
     displayPokemonList: [] as PokemonListType,
     paginatedPokemonList: [] as PokemonListType,
     typeListData: {} as DisplayDataType,
@@ -32,6 +32,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     // 表示させるポケモンリスト
     setDisplayPokemonList(list: PokemonListType) {
       this.displayPokemonList = list;
+      console.log(this.displayPokemonList);
     },
     // お気に入り表示の切り替え
     toggleShowFavorites() {
@@ -50,10 +51,38 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     },
     // ポケモンのIDを格納する
     getPokemonIdList() {
-      this.pokemonList.map((pokemon) => {
+      this.pokemonList = this.pokemonList.map((pokemon) => {
         const id = getLastElementUrl(pokemon.url);
         this.displayIdData[pokemon.name] = id;
+        return {
+          ...pokemon,
+          id,
+        };
       });
+    },
+    // ポケモンのタイプ情報を pokemonList に格納する
+    async getPokemonTypeList() {
+      // Promiseの配列を作る (fetchSingleData の呼び出し)
+      const promiseArray = this.pokemonList.map(async (pokemon) => {
+        const response = await fetchSingleData(pokemon.id);
+        const type1Data = response.types.find(
+          (obj: PokemonTypesObjType) => obj.slot === 1
+        );
+        const type1 = type1Data ? type1Data.type.name : "";
+        const type2Data = response.types.find(
+          (obj: PokemonTypesObjType) => obj.slot === 2
+        );
+        const type2 = type2Data ? type2Data.type.name : "";
+        return {
+          ...pokemon,
+          type1,
+          type2,
+        };
+      });
+      // すべての非同期処理が終わるのを待ってから結果を配列で受け取る
+      const result = await Promise.all(promiseArray);
+      this.pokemonList = result;
+      console.log(this.pokemonList);
     },
     // ポケモン画像を取得する
     loadPokemonImageV2() {

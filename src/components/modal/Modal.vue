@@ -28,7 +28,7 @@ const isFavorite = computed(() =>
 
 <template>
   <div class="modal-overlay" @click.stop="$emit('close')">
-    <div v-if="modalDataStore.isFavoriteModalOpen" class="modal-content" @click.stop>
+    <div v-if="modalDataStore.isFavoriteModalOpen" class="modal-content-pokemon" @click.stop>
       <FavoritePokemon :name="name" :url="url"/>
       <PokemonJpName :name="name"/>
       <PokemonImages :name="name"/>
@@ -53,6 +53,12 @@ const isFavorite = computed(() =>
   justify-content: center;
   align-items: center;
   z-index: 1000;
+}
+.modal-content-pokemon {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .modal-content {
   background: white;

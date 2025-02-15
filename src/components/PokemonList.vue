@@ -10,6 +10,7 @@ const favoriteDataStore = useFavoriteDataStore();
 onMounted(async () => {
   await pokemonDataStore.getPokemonList();
   pokemonDataStore.getPokemonIdList();
+  await pokemonDataStore.getPokemonTypeList();
   pokemonDataStore.loadPokemonImageV2();
   pokemonDataStore.loadPokemonJpNameV2();
 });

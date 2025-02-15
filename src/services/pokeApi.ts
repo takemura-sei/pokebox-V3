@@ -5,7 +5,6 @@ export {
   fetchPokemonSelectionData,
   fetchSingleData,
   fetchSpeciesData,
-  fetchTypeData,
 };
 
 const fetchPokemonDataV2 = async() => {
@@ -26,7 +25,7 @@ const fetchPokemonSelectionData = async(offset: number, finalLimit: number) => {
   return response.data;
 };
 
-const fetchSingleData = async(endpoint: string) => {
+const fetchSingleData = async(endpoint: string | undefined) => {
   const { $pokeApiPlugin } = useNuxtApp();
   const response = await $pokeApiPlugin.get(`pokemon/${endpoint}`)
   return response.data;
@@ -37,9 +36,3 @@ const fetchSpeciesData = async(endpoint: string) => {
   const response = await $pokeApiPlugin.get(`pokemon-species/${endpoint}`)
   return response.data;
 };
-
-const fetchTypeData = async(endpoint: number) => {
-  const { $pokeApiPlugin } = useNuxtApp();
-  const response = await $pokeApiPlugin.get(`type/${endpoint}`);
-  return response.data;
-}
