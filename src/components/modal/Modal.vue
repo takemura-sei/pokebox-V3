@@ -5,6 +5,7 @@ import PokemonImages from '@/components/card/PokemonImages.vue';
 import PokemonJpName from '@/components/card/PokemonJpName.vue';
 import typeData from '@/components/filter/typeData.vue';
 import AreaData from '@/components/filter/AreaData.vue';
+import Search from '@/components/filter/Search.vue';
 import { useFavoriteDataStore } from '@/stores/favoriteDataStore';
 import { useModalDataStore } from '@/stores/modalDataStore';
 
@@ -38,7 +39,8 @@ const isFavorite = computed(() =>
     </div>
     <div v-if="modalDataStore.isFilterModalOpen" class="modal-content" @click.stop>
       <typeData class="mb-5"/>
-      <AreaData />
+      <AreaData class="mb-5" />
+      <Search />
     </div>
   </div>
 </template>

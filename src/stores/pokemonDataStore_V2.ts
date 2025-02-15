@@ -3,6 +3,8 @@ import { defineStore } from "pinia";
 import { fetchPokemonDataV2, fetchSingleData, fetchSpeciesData } from "@/services/pokeApi";
 import type { defaultPokemonListType, PokemonListType, DisplayDataType, LanguageNameObjType, PokemonTypesObjType } from "@/types/pokemonDataStoreTypes";
 import { useFavoriteDataStore } from "@/stores/favoriteDataStore";
+import { useFilterTypeDataStore } from "@/stores/filterTypeDataStore";
+import { useFilterAreaDataStore } from "@/stores/filterAreaDataStore";
 
 export const usePokemonDataStoreV2 = defineStore('pokemonData', {
   state: () => ({
@@ -103,6 +105,63 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
         );
         this.displayJpNameDataV2[pokemon.name] = jpName.name;
       });
+    },
+    /* 追加: フィルタをかけるアクション */
+    applyFilter() {
+      const filterTypeDataStore = useFilterTypeDataStore();
+      const filterAreaDataStore = useFilterAreaDataStore();
+
+      // いったん全ポケモンをコピーして、そこに対して順次絞り込みをかける
+      let filtered = [...this.pokemonList];
+
+      //----------------------------------
+      // 1. 地方フィルタ
+      //----------------------------------
+      if (filterAreaDataStore.filterAreaList.length > 0) {
+        // 選択されている地方(area)を配列で取得
+        const selectedAreas = filterAreaDataStore.filterAreaList.map(a => a.area);
+        // area ごとに何番のポケモンを含めるかを決める
+        filtered = filtered.filter((pokemon) => {
+          const idNum = Number(pokemon.id);
+
+          // ポケモンが属する世代に合致しているかチェック (OR 条件)
+          // 例: カントー=1..151, ジョウト=152..251, ホウエン=252..386, シンオウ=387..493
+          const inKanto  = selectedAreas.includes('Kanto')  && (idNum >= 1   && idNum <= 151);
+          const inJohto  = selectedAreas.includes('Johto')  && (idNum >= 152 && idNum <= 251);
+          const inHoenn  = selectedAreas.includes('Hoeen')  && (idNum >= 252 && idNum <= 386);
+          const inSinnoh = selectedAreas.includes('Sinnoh') && (idNum >= 387 && idNum <= 493);
+
+          return inKanto || inJohto || inHoenn || inSinnoh;
+        });
+      }
+
+      //----------------------------------
+      // 2. タイプフィルタ
+      //----------------------------------
+      if (filterTypeDataStore.filterTypeList.length > 0) {
+        // 選択されているタイプの文字列を配列で取得
+        const selectedTypes = filterTypeDataStore.filterTypeList.map(t => t.type);
+        filtered = filtered.filter((pokemon) => {
+          // pokemon.type1 or type2 のいずれかが含まれていればマッチ (OR検索)
+          return selectedTypes.includes(pokemon.type1 ?? '') || selectedTypes.includes(pokemon.type2 ?? '');
+        });
+      }
+
+      // フィルタ結果を表示リストとしてセットし、ページネーションを先頭にリセット
+      this.setDisplayPokemonList(filtered);
+      this.updatePaginatedPokemonList(1);
+    },
+    /* 追加: フィルタを全部リセットするアクション（必要なら） */
+    resetFilter() {
+      // フィルタ用ストアを呼び出して、filterリストを空に
+      const filterTypeDataStore = useFilterTypeDataStore();
+      const filterAreaDataStore = useFilterAreaDataStore();
+      filterTypeDataStore.filterTypeList = [];
+      filterAreaDataStore.filterAreaList = [];
+
+      // 全部表示に戻して、ページネーションも1ページ目へ
+      this.setDisplayPokemonList(this.pokemonList);
+      this.updatePaginatedPokemonList(1);
     },
   },
 });
