@@ -1,29 +1,24 @@
 <script setup>
-import { usePokemonDataStore } from '@/stores/pokemonDataStore';
-import { getLastElementUrl } from '@/utils/urlUtils';
-
-const pokemonDataStore = usePokemonDataStore();
-const imageUrl = ref('');
+import { usePokemonDataStoreV2 } from '@/stores/pokemonDataStore_V2';
+const pokemonDataStore = usePokemonDataStoreV2();
 
 const props = defineProps ({
   name: {
     type: String,
     required: true
   },
-  url: {
-    type: String,
-    required: true
-  }
 });
-const lastElementUrl = getLastElementUrl(props.url);
-
-onMounted(async () => {
-  await pokemonDataStore.loadPokemonImage(props.name, lastElementUrl);
-  imageUrl.value = pokemonDataStore.displayImageData[props.name];
-})
 
 </script>
 
 <template>
-    <img :src=imageUrl alt="">
+    <img :src="pokemonDataStore.displayImageDataV2[props.name]" alt="" class="pokemon-img">
 </template>
+
+<style scoped>
+@media (max-width: 640px) {
+  .pokemon-img {
+    width: 80px;
+  } 
+}
+</style>
