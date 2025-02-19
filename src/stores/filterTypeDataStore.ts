@@ -13,12 +13,10 @@ export const useFilterTypeDataStore = defineStore('filterTypeData', {
     addFilterType(type: string, id: number) {
       if (!this.filterTypeList.find(item => item.id === id)) {
         this.filterTypeList.push({ type, id });
-        console.log(this.filterTypeList);
       }
     },
     deleteFilterType(id: number) {
       this.filterTypeList = this.filterTypeList.filter(item => item.id !== id);
-      console.log(this.filterTypeList);
     },
   }
 });

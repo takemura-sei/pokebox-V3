@@ -34,7 +34,6 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     // 表示させるポケモンリスト
     setDisplayPokemonList(list: PokemonListType) {
       this.displayPokemonList = list;
-      console.log(this.displayPokemonList);
     },
     // お気に入り表示の切り替え
     toggleShowFavorites() {
@@ -84,7 +83,6 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       // すべての非同期処理が終わるのを待ってから結果を配列で受け取る
       const result = await Promise.all(promiseArray);
       this.pokemonList = result;
-      console.log(this.pokemonList);
     },
     // ポケモン画像を取得する
     loadPokemonImageV2() {
