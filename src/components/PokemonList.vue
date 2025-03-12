@@ -13,7 +13,9 @@ onMounted(async () => {
   await pokemonDataStore.getPokemonTypeList();
   pokemonDataStore.loadPokemonImageV2();
   pokemonDataStore.loadPokemonJpNameV2();
-  console.log("aa");
+  console.log('allPokemonData：', pokemonDataStore.pokemonList);
+  console.log('displayPokemonList(デフォルト画面)：', pokemonDataStore.displayPokemonList);
+  console.log('pagenatiedPokemonList：', pokemonDataStore.paginatedPokemonList);
 });
 </script>
 

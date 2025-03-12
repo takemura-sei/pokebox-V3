@@ -14,11 +14,13 @@ export const useFavoriteDataStore = defineStore('favoriteData', {
       if (!this.favoritePokemonList.find(pokemon => pokemon.name === name)) {
         this.favoritePokemonList.push({ name, url });
         this.sortFavoritePokemonList();
+        console.log(this.favoritePokemonList);
       }
     },
     // お気に入りから削除
     deleteFavoritePokemon(name: string) {
       this.favoritePokemonList = this.favoritePokemonList.filter(pokemon => pokemon.name !== name);
+      console.log(this.favoritePokemonList);
     },
     // お気に入りリストをポケモンナンバー順に並び替え
     sortFavoritePokemonList() {
@@ -33,6 +35,7 @@ export const useFavoriteDataStore = defineStore('favoriteData', {
     reloadFaovoritePageFlag() {
       if (this.showFavorites) { // お気に入りページを表示中のみ、お気に入り解除をしたポケモンを削除する
         this.reloadFaovoritePage();
+        console.log('お気に入り画面を再レンダリング');
       } 
       else {
         return;

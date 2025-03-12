@@ -68,6 +68,7 @@ const paginationItems = computed<(number | string)[]>(() => {
 const goToPage = (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
     pokemonDataStore.updatePaginatedPokemonList(page);
+    console.log('ページネーション用に分割したポケモンリスト：', pokemonDataStore.paginatedPokemonList);
   }
 };
 

@@ -15,7 +15,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
     displayIdData: {} as DisplayDataType,
     displayImageDataV2: {} as DisplayDataType,
     displayJpNameDataV2: {} as DisplayDataType,
-    itemsPerPage: 30, // 1ページあたりのポケモン数
+    itemsPerPage: 9, // 1ページあたりのポケモン数
     currentPage: 1, // 現在のページ番号
   }),
   getters: {
@@ -40,6 +40,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       const favoriteDataStore = useFavoriteDataStore();
       favoriteDataStore.showFavorites = !favoriteDataStore.showFavorites;
       this.setDisplayPokemonList(favoriteDataStore.showFavorites ? favoriteDataStore.favoritePokemonList : this.pokemonList);
+      favoriteDataStore.showFavorites ? console.log("displayPokemonList(お気に入り画面)：", this.displayPokemonList) : console.log("displayPokemonList(デフォルト画面)：", this.displayPokemonList);
       this.updatePaginatedPokemonList(1);
     },
     // ページデータを更新
@@ -118,6 +119,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       if (filterTypeDataStore.filterTypeList.length > 0) {
         // 選択されているタイプの文字列を配列で取得
         const selectedTypes = filterTypeDataStore.filterTypeList.map(t => t.type);
+        console.log('選択されたタイプ', selectedTypes);
         filtered = filtered.filter((pokemon) => {
           // pokemon.type1 or type2 のいずれかが含まれていればマッチ (OR検索)
           return selectedTypes.includes(pokemon.type1 ?? '') || selectedTypes.includes(pokemon.type2 ?? '');
@@ -130,6 +132,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       if (filterAreaDataStore.filterAreaList.length > 0) {
         // 選択されている地方(area)を配列で取得
         const selectedAreas = filterAreaDataStore.filterAreaList.map(a => a.area);
+        console.log('選択された地方', selectedAreas);
         // area ごとに何番のポケモンを含めるかを決める
         filtered = filtered.filter((pokemon) => {
           const idNum = Number(pokemon.id);
@@ -148,6 +151,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       // フィルタ結果を表示リストとしてセットし、ページネーションを先頭にリセット
       this.setDisplayPokemonList(filtered);
       this.updatePaginatedPokemonList(1);
+      console.log('displayPokemonList(フィルタ画面)：', this.displayPokemonList)
     },
     /* 追加: フィルタを全部リセットするアクション（必要なら） */
     resetFilter() {
@@ -160,6 +164,7 @@ export const usePokemonDataStoreV2 = defineStore('pokemonData', {
       // 全部表示に戻して、ページネーションも1ページ目へ
       this.setDisplayPokemonList(this.pokemonList);
       this.updatePaginatedPokemonList(1);
+      console.log('displayPokemonList(デフォルト画面)：', this.displayPokemonList)
     },
   },
 });
