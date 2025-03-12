@@ -13,6 +13,7 @@ onMounted(async () => {
   await pokemonDataStore.getPokemonTypeList();
   pokemonDataStore.loadPokemonImageV2();
   pokemonDataStore.loadPokemonJpNameV2();
+  console.log("aa");
 });
 </script>
 
