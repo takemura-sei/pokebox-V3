@@ -1,61 +1,61 @@
-# Pokemon Pokedex V3
+# Pokemon 図鑑 V3
 
-A modern, responsive Pokemon encyclopedia built with Nuxt 3, featuring advanced filtering, search capabilities, and detailed Pokemon information display.
+Nuxt 3で構築されたモダンでレスポンシブなポケモン図鑑。高度なフィルタリング、検索機能、詳細なポケモン情報表示を実装。
 
-## Overview
+## 概要
 
-### Why This Project?
+### なぜこのプロジェクトを作ったか
 
-This project was created to explore Nuxt 3's Composition API and demonstrate proficiency in building data-intensive Vue.js applications with optimal performance and user experience.
+Nuxt 3のComposition APIを探求し、データ集約型のVue.jsアプリケーションを最適なパフォーマンスとユーザー体験で構築する能力を示すために作成しました。
 
-### What It Does
+### 何ができるか
 
-- Browse all Pokemon with infinite scroll pagination
-- Filter Pokemon by type, region, and generation
-- Search Pokemon by name or ID
-- View detailed stats, abilities, and evolution chains in modal dialogs
-- Responsive design optimized for mobile and desktop
+- 無限スクロールページネーションで全ポケモンを閲覧
+- タイプ、地域、世代でポケモンをフィルタリング
+- 名前やIDでポケモンを検索
+- モーダルダイアログで詳細な種族値、特性、進化系統を表示
+- モバイルとデスクトップに最適化されたレスポンシブデザイン
 
-## Tech Stack
+## 技術スタック
 
-- **Framework**: Nuxt 3.14+ (Vue 3 Composition API)
-- **State Management**: Pinia 2.3+
-- **Styling**: Tailwind CSS 3.4+
-- **API Client**: Axios 1.7+
-- **Deployment**: Firebase Hosting
+- **フレームワーク**: Nuxt 3.14+ (Vue 3 Composition API)
+- **状態管理**: Pinia 2.3+
+- **スタイリング**: Tailwind CSS 3.4+
+- **APIクライアント**: Axios 1.7+
+- **デプロイ**: Firebase Hosting
 - **CI/CD**: GitHub Actions
 
-## Key Technical Achievements
+## 主要な技術的成果
 
-### Performance Optimizations
+### パフォーマンス最適化
 
-- **Lazy Loading**: Implemented virtual scrolling for Pokemon list, reducing initial DOM nodes by 80%
-- **State Caching**: Pinia stores with localStorage persistence, reducing API calls by 60%
-- **Image Optimization**: Progressive loading with placeholder images
+- **遅延読み込み**: ポケモンリストに仮想スクロールを実装し、初期DOM要素を80%削減
+- **状態キャッシング**: localStorageを使用したPiniaストアでAPIコールを60%削減
+- **画像最適化**: プレースホルダー画像を使用したプログレッシブローディング
 
-### Architecture Improvements
+### アーキテクチャの改善
 
-- **Modular Store Design**: Separated concerns into `pokemonDataStore`, `filterTypeDataStore`, and `modalDataStore`
-- **Composable Pattern**: Reusable `useModal` and `useFilter` composables
-- **Type Safety**: Full TypeScript support with custom type definitions
+- **モジュール化されたストア設計**: `pokemonDataStore`、`filterTypeDataStore`、`modalDataStore`に関心を分離
+- **Composableパターン**: 再利用可能な`useModal`と`useFilter` composables
+- **型安全性**: カスタム型定義による完全なTypeScriptサポート
 
-### CI/CD Pipeline
+### CI/CDパイプライン
 
-- Automated Firebase deployment via GitHub Actions
-- Build verification and testing before deployment
-- Zero-downtime deployments
+- GitHub Actions経由でFirebaseへ自動デプロイ
+- デプロイ前のビルド検証とテスト
+- ゼロダウンタイムデプロイメント
 
-## Project Structure
+## プロジェクト構造
 
 ```
 src/
 ├── components/
-│   ├── card/               # Pokemon card components
-│   ├── favorite/           # Favorite Pokemon management
-│   ├── filter/             # Search and filter components
-│   ├── modal/              # Pokemon detail modal
-│   ├── pagination/         # Pagination component
-│   └── PokemonList.vue     # Main Pokemon list
+│   ├── card/               # ポケモンカードコンポーネント
+│   ├── favorite/           # お気に入りポケモン管理
+│   ├── filter/             # 検索とフィルターコンポーネント
+│   ├── modal/              # ポケモン詳細モーダル
+│   ├── pagination/         # ページネーションコンポーネント
+│   └── PokemonList.vue     # メインのポケモンリスト
 ├── stores/
 │   ├── pokemonDataStore_V2.ts
 │   ├── filterTypeDataStore.ts
@@ -64,73 +64,73 @@ src/
 ├── types/
 │   └── pokemonDataStoreTypes.ts
 ├── plugins/
-│   └── axios.ts            # API configuration
-└── utils/                  # Helper functions
+│   └── axios.ts            # API設定
+└── utils/                  # ヘルパー関数
 ```
 
-## Setup Instructions
+## セットアップ手順
 
-### Prerequisites
+### 前提条件
 
-- Node.js 18+ or Bun
+- Node.js 18+ または Bun
 - npm/yarn/pnpm
 
-### Installation
+### インストール
 
 ```bash
-# Clone the repository
+# リポジトリをクローン
 git clone https://github.com/takemura-sei/pokebox-V3.git
 cd pokebox-V3
 
-# Install dependencies
+# 依存関係をインストール
 npm install
 
-# Start development server
+# 開発サーバーを起動
 npm run dev
 
-# Build for production
+# 本番用ビルド
 npm run build
 
-# Preview production build
+# 本番ビルドをプレビュー
 npm run preview
 ```
 
-### Firebase Deployment
+### Firebaseデプロイ
 
 ```bash
-# Install Firebase CLI
+# Firebase CLIをインストール
 npm install -g firebase-tools
 
-# Login to Firebase
+# Firebaseにログイン
 firebase login
 
-# Deploy
+# デプロイ
 firebase deploy
 ```
 
-## API Integration
+## API統合
 
-This project uses the [PokeAPI](https://pokeapi.co/) for Pokemon data:
+このプロジェクトは[PokeAPI](https://pokeapi.co/)を使用してポケモンデータを取得します：
 
-- Pokemon data: `/api/v2/pokemon/`
-- Type data: `/api/v2/type/`
-- Region data: `/api/v2/region/`
+- ポケモンデータ: `/api/v2/pokemon/`
+- タイプデータ: `/api/v2/type/`
+- 地域データ: `/api/v2/region/`
 
-## What I Learned
+## 学んだこと
 
-- **Nuxt 3 Architecture**: Deep understanding of auto-imports, server routes, and nitro engine
-- **State Management Patterns**: Effective use of Pinia with TypeScript for complex state
-- **Performance Optimization**: Virtual scrolling and lazy loading for large datasets
-- **CI/CD Best Practices**: Automated deployment pipeline with Firebase and GitHub Actions
+- **Nuxt 3アーキテクチャ**: 自動インポート、サーバールート、nitroエンジンの深い理解
+- **状態管理パターン**: 複雑な状態のためのPiniaとTypeScriptの効果的な使用
+- **パフォーマンス最適化**: 大規模データセットのための仮想スクロールと遅延読み込み
+- **CI/CDベストプラクティス**: FirebaseとGitHub Actionsによる自動デプロイパイプライン
 
-## Future Improvements
+## 今後の改善予定
 
-- Add Pokemon comparison feature
-- Implement team builder functionality
-- Add PWA support for offline access
-- Integrate battle simulator
-- Add user authentication for favorite Pokemon lists
+- ポケモン比較機能の追加
+- チームビルダー機能の実装
+- オフラインアクセスのためのPWAサポート追加
+- バトルシミュレーターの統合
+- お気に入りポケモンリストのためのユーザー認証追加
 
-## License
+## ライセンス
 
-MIT License - feel free to use this project for learning and portfolio purposes.
+MITライセンス - 学習やポートフォリオ目的で自由に使用できます。
