@@ -9,12 +9,10 @@ export const useFilterAreaDataStore = defineStore('filterAreaData', {
     addFilterArea(id: number, area: string) {
       if(!this.filterAreaList.find(item => item.id === id)) {
         this.filterAreaList.push({ id, area });
-        console.log(this.filterAreaList);
       }
     },
     deleteFilterArea(id: number) {
       this.filterAreaList = this.filterAreaList.filter(item => item.id !== id);
-      console.log(this.filterAreaList);
     },
   }
 })
